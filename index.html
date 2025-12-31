@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- App Script -->
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- HEADER -->
+    <header class="top-bar">
+      <h1>Tasks</h1>
+
+      <div class="header-actions">
+        <button id="themeToggle" type="button" title="Change theme">🌙</button>
+        <button id="notifyToggle" type="button" title="Hourly reminders">🔔</button>
+        <button id="installBtn" type="button" hidden>Install</button>
+      </div>
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div>
+      <span id="progressText">0% completed</span>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats">
+      <span id="totalTasks">0 Tasks</span>
+      <span id="doneTasks">0 Done</span>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filters">
+      <button data-filter="all" class="active" type="button">All</button>
+      <button data-filter="active" type="button">Active</button>
+      <button data-filter="done" type="button">Done</button>
+    </div>
+
+    <!-- TASKS -->
+    <section class="task-container">
+
+      <div class="task-section">
+        <h3>Today</h3>
+        <ul id="todayList"></ul>
+      </div>
+
+      <div class="task-section">
+        <h3>Upcoming</h3>
+        <ul id="upcomingList"></ul>
+      </div>
+
+      <div class="task-section">
+        <h3>No Date</h3>
+        <ul id="noDateList"></ul>
+      </div>
+
+      <p id="emptyState">No tasks yet. Add one 👇</p>
+    </section>
+
+    <!-- INPUT -->
+    <form class="task-input-bar">
+      <input
+        id="taskInput"
+        type="text"
+        placeholder="Add a task…"
+        autocomplete="off"
+        required
+      />
+
+      <select id="priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <input type="date" id="dueDate" />
+      <button type="submit">Add</button>
+    </form>
+
+  </main>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div id="confirmOverlay" class="overlay hidden">
+    <div class="modal">
+      <p>Delete this task?</p>
+      <div class="modal-actions">
+        <button id="cancelDelete" type="button">Cancel</button>
+        <button id="confirmDelete" type="button" class="danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/service-worker.js");
+    }
+  </script>
+
+</body>
+</html>
